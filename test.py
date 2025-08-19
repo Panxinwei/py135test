@@ -14,10 +14,10 @@ def user_input_features():
     S6 = st.sidebar.slider('28_AB', 0, 80, 53)
     S7 = st.sidebar.slider('30_AD', 0.0, 90.0, 9.0)
     S8 = st.sidebar.slider('31_AE', 0.0, 1000.0, 285.7)
-    data = {'2_B': 2_B, '3_C': 3_C,
-            '8_H': 8_H, '19_S': 19_S,
-            '25_Y': 25_Y, '28_AB': 28_AB,
-            '30_AD': 30_AD, '31_AE': 31_AE
+    data = {'2_B': S1, '3_C': S2,
+            '8_H': S3, '19_S': S4,
+            '25_Y': S5, '28_AB': S6,
+            '30_AD': S7, '31_AE': S8
             }
     features = pd.DataFrame(data, index=[0])
     return features
