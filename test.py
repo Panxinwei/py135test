@@ -19,7 +19,7 @@ def user_input_features():
     data = {'2_B': S1, '3_C': S2,
             '8_H': S3, '19_S': S4,
             '25_Y': S5, '28_AB': S6,
-            '30_A': S7, '31_AE': S8
+            '30_AD': S7, '31_AE': S8
             }
     features = pd.DataFrame(data, index=[0])
     return features
