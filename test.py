@@ -33,6 +33,8 @@ model=joblib.load('AdaBoost.pkl')
 prediction = model.predict(df)
 prediction_proba = model.predict_proba(df)
 st.write(f"预测结果: {prediction[0]}")
+st.write(f"预测阳性概率: {(prediction_proba[0][1])*100:.2f}%")
+
 
 
 #explainer = shap.TreeExplainer(model)

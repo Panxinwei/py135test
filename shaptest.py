@@ -12,13 +12,13 @@ from sklearn.preprocessing import StandardScaler   # 标准化模块
 #from sklearn.model_selection import GridSearchCV     #超参数网格搜索
 import shap  # 导入SHAP模型解释工具
 import matplotlib.pyplot as plt
-
-
+plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+plt.rcParams['axes.unicode_minus'] = False
 def main():
 #    matplotlib.use('TKAgg')
 #    plt.style.use('ggplot')
     '''========================导入数据========================'''
-    data = pd.read_excel('C:/Users/Administrator/Desktop/data.xlsx')  # 读取xlsx格式数据
+    data = pd.read_excel('C:/Users/Administrator/Desktop/新建文件夹 (2)/data.xlsx')  # 读取xlsx格式数据
     # date = pd.read_csv('D:/复现/trainset_loop6.csv')   #读取csv格式数据
 #    print(data.isnull().sum())  # 检查数据中是否存在缺失值
 #    print(data.shape)  # 检查维度
@@ -32,9 +32,9 @@ def main():
 #    scaler = StandardScaler()
 #    X = scaler.fit_transform(X)
     '''====================划分训练集与测试集==================='''
-    X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.1, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=42)
 
-    model=joblib.load('AdaBoost.pkl')
+    model=joblib.load('logistic_regression.pkl')
 
     '''=====================SHAP解释模型======================'''
     explainer = shap.KernelExplainer(model.predict,X_test)  # 传入训练好的模型。
