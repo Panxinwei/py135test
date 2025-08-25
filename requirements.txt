@@ -2,4 +2,4 @@ joblib
 scikit-learn
 numba
 matplotlib
-git+https://github.com/helias/shap.git@support-adaboost
+git+https://github.com/Panxinwei/py135test.git@support-adaboostnew
