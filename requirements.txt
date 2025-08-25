@@ -3,3 +3,4 @@ scikit-learn
 numba
 matplotlib
 git+https://github.com/Panxinwei/Shap.git
+ipython
