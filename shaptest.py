@@ -11,6 +11,7 @@ from sklearn.preprocessing import StandardScaler   # 标准化模块
 #from sklearn.metrics import mean_squared_error, r2_score   #误差函数MSE,误差函数R^2,
 #from sklearn.model_selection import GridSearchCV     #超参数网格搜索
 import openpyxl
+from sklearn.tree import DecisionTreeRegressor
 import shap  # 导入SHAP模型解释工具
 import matplotlib.pyplot as plt
 plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -69,40 +70,48 @@ def main():
     X_test.reset_index(drop=True, inplace=True)
     for i in range(len(columns)):
 
-        max_feature_value_where_shap_negative=-1
-        min_feature_value_where_shap_postivate=-1
+        # max_feature_value_where_shap_negative=-1
+        # min_feature_value_where_shap_postivate=-1
         shap.dependence_plot(columns[i], shap_values, X_test, interaction_index=None,show=False)
         feature_values = X_test.iloc[:, i].values
-        # 假设您知道原始形状
-        n_samples = X_test.shape[0]  # 样本数量
-        n_features = X_test.shape[1]  # 特征数量
+        feature_namesreshape=feature_values.reshape(-1, 1)
+        dt = DecisionTreeRegressor(max_depth=1)
+        dt.fit(feature_namesreshape, shap_values)
 
-        # 重新调整形状
-        shap_values_2d = shap_values.reshape(n_samples, n_features)
-        negative_shap_mask = shap_values_2d[:,i] < 0
-
-        negative_feature_values = feature_values[negative_shap_mask]
-
-        # 在这些 SHAP 值小于 0 的数据点中，找到最大的特征值
-        if len(negative_feature_values) > 0:
-            max_feature_value_where_shap_negative = negative_feature_values.max()
+        # 3. 提取分裂阈值
+        threshold_value = dt.tree_.threshold[0]
 
 
-        postivate_shap_mask = shap_values_2d[:,i] > 0
-        postivate_feature_values = feature_values[postivate_shap_mask]
-
-        # 在这些 SHAP 值小于 0 的数据点中，找到最大的特征值
-        if len(postivate_feature_values) > 0:
-            min_feature_value_where_shap_postivate = postivate_feature_values.min()
-
-
-        if max_feature_value_where_shap_negative>0 and min_feature_value_where_shap_postivate>0:
-            medX= round((max_feature_value_where_shap_negative+min_feature_value_where_shap_postivate)/2,2)
-        else:
-            medX=0
+        # # 假设您知道原始形状
+        # n_samples = X_test.shape[0]  # 样本数量
+        # n_features = X_test.shape[1]  # 特征数量
+        #
+        # # 重新调整形状
+        # shap_values_2d = shap_values.reshape(n_samples, n_features)
+        # negative_shap_mask = shap_values_2d[:,i] < 0
+        #
+        # negative_feature_values = feature_values[negative_shap_mask]
+        #
+        # # 在这些 SHAP 值小于 0 的数据点中，找到最大的特征值
+        # if len(negative_feature_values) > 0:
+        #     max_feature_value_where_shap_negative = negative_feature_values.max()
+        #
+        #
+        # postivate_shap_mask = shap_values_2d[:,i] > 0
+        # postivate_feature_values = feature_values[postivate_shap_mask]
+        #
+        # # 在这些 SHAP 值小于 0 的数据点中，找到最大的特征值
+        # if len(postivate_feature_values) > 0:
+        #     min_feature_value_where_shap_postivate = postivate_feature_values.min()
+        #
+        #
+        # if max_feature_value_where_shap_negative>0 and min_feature_value_where_shap_postivate>0:
+        #     medX= round((max_feature_value_where_shap_negative+min_feature_value_where_shap_postivate)/2,2)
+        # else:
+        #     medX=0
         # 2. 获取当前坐标系
         ax = plt.gca()
-
+        medX=round(threshold_value,2)
         # 3. 添加y=0的水平辅助线
         ax.axhline(y=0, color='r', linestyle='--', linewidth=1, label='y=0')
         ax.axvline(x=medX, color='r', linestyle='--', linewidth=1, label='Mean')

@@ -12,14 +12,14 @@ import shap
 
 # 用户输入数据
 def user_input_features():
-    S1 = st.sidebar.slider('2_B(105)', 30, 120, 105)
-    S2 = st.sidebar.slider('3_C(6.49)', 0.00, 10.00, 6.49)
-    S3 = st.sidebar.slider('8_H(3.68)', 0.00, 8.00, 3.68)
-    S4 = st.sidebar.slider('19_S(0.44)', 0.00, 2.00, 0.44)
-    S5 = st.sidebar.slider('25_Y(5.8)', 0.0, 13.0, 5.8)
-    S6 = st.sidebar.slider('28_AB(52)', 40, 100, 52)
-    S7 = st.sidebar.slider('30_AD(9.2)', 7.0, 11.0, 9.2)
-    S8 = st.sidebar.slider('31_AE(329.3)', 50.0, 700.0, 329.3)
+    S1 = st.sidebar.slider('2_B(102.79)-', 30.00, 120.00, 102.79)
+    S2 = st.sidebar.slider('3_C(6.67)-', 0.00, 10.00, 6.67)
+    S3 = st.sidebar.slider('8_H(2.79)+', 0.00, 8.00, 2.79)
+    S4 = st.sidebar.slider('19_S(0.41)+', 0.00, 2.00, 0.41)
+    S5 = st.sidebar.slider('25_Y(2.71)-', 0.00, 13.00, 2.71)
+    S6 = st.sidebar.slider('28_AB(51.50)+', 40.00, 100.00, 51.50)
+    S7 = st.sidebar.slider('30_AD(7.79)+', 7.00, 11.00, 7.79)
+    S8 = st.sidebar.slider('31_AE(241.40)-', 50.00, 700.00, 241.40)
     data = {'2_B': S1, '3_C': S2,
             '8_H': S3, '19_S': S4,
             '25_Y': S5, '28_AB': S6,
@@ -63,7 +63,7 @@ if st.button("预测"):
     #explainer = shap.KernelExplainer(model.predict, df)
     #shap_values = explainer.shap_values(df)
     #explainer = shap.TreeExplainer(model,model_output="raw")
-    explainer = shap.TreeExplainer(model)
+    explainer = shap.Explainer(model)
 
     # 或者使用 shap.TreeExplainer(model) 来计算树模型的 SHAP 值
     shap_values = explainer(df)
