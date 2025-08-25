@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: shap-explainer
+Version: 0.1.7
+Summary: SHAP explainer with ChatGPT API
+Author: raytanghw (Ray Tang)
+Author-email: <raytanghw@gmail.com>
+Keywords: python,shap,explainer,llm,chatgpt,xai
+Classifier: Development Status :: 1 - Planning
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Dist: shap
+Requires-Dist: langchain
+
