@@ -1,5 +1,5 @@
 joblib
 scikit-learn
 numba
-shap
 matplotlib
+git+https://github.com/helias/shap.git@support-adaboost
