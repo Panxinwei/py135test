@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split # 数据划分模块
 from sklearn.preprocessing import StandardScaler   # 标准化模块
 #from sklearn.metrics import mean_squared_error, r2_score   #误差函数MSE,误差函数R^2,
 #from sklearn.model_selection import GridSearchCV     #超参数网格搜索
+import openpyxl
 import shap  # 导入SHAP模型解释工具
 import matplotlib.pyplot as plt
 plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -18,7 +19,7 @@ def main():
 #    matplotlib.use('TKAgg')
 #    plt.style.use('ggplot')
     '''========================导入数据========================'''
-    data = pd.read_excel('C:/Users/Administrator/Desktop/新建文件夹 (2)/data.xlsx')  # 读取xlsx格式数据
+    data = pd.read_excel('C:/Users/Administrator/Desktop/data.xlsx')  # 读取xlsx格式数据
     # date = pd.read_csv('D:/复现/trainset_loop6.csv')   #读取csv格式数据
 #    print(data.isnull().sum())  # 检查数据中是否存在缺失值
 #    print(data.shape)  # 检查维度
@@ -32,15 +33,18 @@ def main():
 #    scaler = StandardScaler()
 #    X = scaler.fit_transform(X)
     '''====================划分训练集与测试集==================='''
-    X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.1, random_state=42)
 
-    model=joblib.load('logistic_regression.pkl')
+    model=joblib.load('AdaBoost.pkl')
 
     '''=====================SHAP解释模型======================'''
     explainer = shap.KernelExplainer(model.predict,X_test)  # 传入训练好的模型。
     shap_values = explainer.shap_values(X_test)  # 这里拿验证数据集进行呈现。输入X_train拿训练数据集进行呈现。
 #    print(shap_values)
+ #   explainer = shap.TreeExplainer(model)
 
+        # 或者使用 shap.TreeExplainer(model) 来计算树模型的 SHAP 值
+ #   shap_values = explainer(X_test).values[:,:,1]
     plt.figure(1)
     shap.summary_plot(shap_values=shap_values,  # 一个数组，其中包含了样本的 Shapley 值，大小为 [n_samples, n_features]
                   features=X_test,  # 一个数组，其中包含了样本的特征矩阵。这需要与 shap_values 中的样本数量一致。
@@ -62,10 +66,62 @@ def main():
 
 
 # SHAP dependence plot (每个特征对因变量的贡献)
+    X_test.reset_index(drop=True, inplace=True)
+    for i in range(len(columns)):
 
-    for i in range(len(columns)-1):
+        max_feature_value_where_shap_negative=-1
+        min_feature_value_where_shap_postivate=-1
         shap.dependence_plot(columns[i], shap_values, X_test, interaction_index=None,show=False)
-    shap.dependence_plot(columns[len(columns)-1], shap_values, X_test, interaction_index=None)
+        feature_values = X_test.iloc[:, i].values
+        # 假设您知道原始形状
+        n_samples = X_test.shape[0]  # 样本数量
+        n_features = X_test.shape[1]  # 特征数量
+
+        # 重新调整形状
+        shap_values_2d = shap_values.reshape(n_samples, n_features)
+        negative_shap_mask = shap_values_2d[:,i] < 0
+
+        negative_feature_values = feature_values[negative_shap_mask]
+
+        # 在这些 SHAP 值小于 0 的数据点中，找到最大的特征值
+        if len(negative_feature_values) > 0:
+            max_feature_value_where_shap_negative = negative_feature_values.max()
+
+
+        postivate_shap_mask = shap_values_2d[:,i] > 0
+        postivate_feature_values = feature_values[postivate_shap_mask]
+
+        # 在这些 SHAP 值小于 0 的数据点中，找到最大的特征值
+        if len(postivate_feature_values) > 0:
+            min_feature_value_where_shap_postivate = postivate_feature_values.min()
+
+
+        if max_feature_value_where_shap_negative>0 and min_feature_value_where_shap_postivate>0:
+            medX= round((max_feature_value_where_shap_negative+min_feature_value_where_shap_postivate)/2,2)
+        else:
+            medX=0
+        # 2. 获取当前坐标系
+        ax = plt.gca()
+
+        # 3. 添加y=0的水平辅助线
+        ax.axhline(y=0, color='r', linestyle='--', linewidth=1, label='y=0')
+        ax.axvline(x=medX, color='r', linestyle='--', linewidth=1, label='Mean')
+        ax.text(medX, 0.1 ,  f'x = {medX}', transform=ax.get_xaxis_transform(),
+                horizontalalignment='center', verticalalignment='center',
+                bbox=dict(boxstyle="round,pad=0.3", alpha=0.5),
+                fontsize=10)
+
+#    shap.dependence_plot(columns[len(columns)-1], shap_values, X_test, interaction_index=None)
+ #   ax = plt.gca()
+ #   ax.axhline(y=0, color='r', linestyle='--', linewidth=1, label='y=0')
+ #   ax.axvline(x=medX, color='r', linestyle='--', linewidth=1, label='Mean')
+
+
+    shap.initjs()  # 需要这段代码
+
+
+    shap.plots.force(explainer.expected_value, shap_values[1], X_test.iloc[0, :],matplotlib = True)
+
 # summary plot是针对全部样本预测的解释，有两种图，‘bar’一种是取每个特征的shap values的平均绝对值来获得标准条形图，这个其实就是全局重要度，
     # ‘dot’另一种是通过散点简单绘制每个样本的每个特征的shap values，通过颜色可以看到特征值大小与预测影响之间的关系，同时展示其特征值分布。
 

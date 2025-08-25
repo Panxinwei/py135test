@@ -12,14 +12,14 @@ import shap
 
 # 用户输入数据
 def user_input_features():
-    S1 = st.sidebar.slider('2_B', 0, 300, 101)
-    S2 = st.sidebar.slider('3_C', 0.00, 10.00, 4.86)
-    S3 = st.sidebar.slider('8_H', 0.00, 50.00, 4.07)
-    S4 = st.sidebar.slider('19_S', 0.00, 10.00, 0.45)
-    S5 = st.sidebar.slider('25_Y', 0.0, 10.0, 4.1)
-    S6 = st.sidebar.slider('28_AB', 0, 80, 66)
-    S7 = st.sidebar.slider('30_AD', 0.0, 90.0, 9.0)
-    S8 = st.sidebar.slider('31_AE', 0.0, 1000.0, 285.7)
+    S1 = st.sidebar.slider('2_B(105)', 30, 120, 105)
+    S2 = st.sidebar.slider('3_C(6.49)', 0.00, 10.00, 6.49)
+    S3 = st.sidebar.slider('8_H(3.68)', 0.00, 8.00, 3.68)
+    S4 = st.sidebar.slider('19_S(0.44)', 0.00, 2.00, 0.44)
+    S5 = st.sidebar.slider('25_Y(5.8)', 0.0, 13.0, 5.8)
+    S6 = st.sidebar.slider('28_AB(52)', 40, 100, 52)
+    S7 = st.sidebar.slider('30_AD(9.2)', 7.0, 11.0, 9.2)
+    S8 = st.sidebar.slider('31_AE(329.3)', 50.0, 700.0, 329.3)
     data = {'2_B': S1, '3_C': S2,
             '8_H': S3, '19_S': S4,
             '25_Y': S5, '28_AB': S6,
