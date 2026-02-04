@@ -329,7 +329,7 @@ with tab1:
                         # 创建SHAP解释器
                         explainer = shap.TreeExplainer(model)
                         shap_values = explainer.shap_values(input_df)
-                        plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial Unicode MS', 'SimHei', 'SimSun']
+                        plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
                         plt.rcParams['axes.unicode_minus'] = False
                         # 绘制SHAP图 - 确保使用中文字体
                         fig, ax = plt.subplots(figsize=(10, 6))
