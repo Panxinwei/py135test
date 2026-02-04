@@ -22,10 +22,10 @@ def setup_chinese_font():
     if sys.platform.startswith('win'):
         # Windows系统
         font_paths = [
-            'C:/Windows/Fonts/simhei.ttf',  # 黑体
-            'C:/Windows/Fonts/simkai.ttf',  # 楷体
-            'C:/Windows/Fonts/simsun.ttc',  # 宋体
-            'C:/Windows/Fonts/msyh.ttc',  # 微软雅黑
+           # 'C:/Windows/Fonts/simhei.ttf',  # 黑体
+           # 'C:/Windows/Fonts/simkai.ttf',  # 楷体
+           # 'C:/Windows/Fonts/simsun.ttc',  # 宋体
+            'msyh.ttc',  # 微软雅黑
         ]
     elif sys.platform.startswith('linux'):
         # Linux系统
@@ -329,8 +329,7 @@ with tab1:
                         # 创建SHAP解释器
                         explainer = shap.TreeExplainer(model)
                         shap_values = explainer.shap_values(input_df)
-                        plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
-                        plt.rcParams['axes.unicode_minus'] = False
+
                         # 绘制SHAP图 - 确保使用中文字体
                         fig, ax = plt.subplots(figsize=(10, 6))
 
