@@ -3,6 +3,7 @@ scikit-learn
 numba
 matplotlib
 ipython
+openpyxl
 git+https://github.com/Panxinwei/Shap.git
 
 
