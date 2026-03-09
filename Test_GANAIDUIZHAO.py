@@ -159,11 +159,11 @@ with st.sidebar:
     else:
         # 尝试加载默认模型
         try:
-            model = joblib.load('lightGBMmodel.pkl')
+            model = joblib.load('lightGBMnew.pkl')
             st.success("默认模型加载成功!")
         except:
             try:
-                with open('lightGBMmodel.pkl', 'rb') as f:
+                with open('lightGBMnew.pkl', 'rb') as f:
                     model = pickle.load(f)
                 st.success("默认模型加载成功!")
             except Exception as e:
