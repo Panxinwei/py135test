@@ -4,6 +4,7 @@ numba
 matplotlib
 ipython
 openpyxl
+lightgbm
 git+https://github.com/Panxinwei/Shap.git
 
 
