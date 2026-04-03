@@ -221,8 +221,8 @@ with tab1:
                              help="A孔斑点平均体积，范围：0.00-100.00")
         S6 = st.number_input('B孔斑点平均体积', min_value=0.00, max_value=100.00, value=1.00, step=0.01,
                              help="B孔斑点平均体积，范围：0.00-100.00")
-        S7 = st.number_input('TBAg/PHA', min_value=0.00, max_value=1.00, value=0.01, step=0.01,
-                             help="TBAg/PHA比值，范围：0.00-1.00")
+        S7 = st.number_input('TBAg/PHA', min_value=0.00, max_value=50.00, value=0.01, step=0.01,
+                             help="TBAg/PHA比值，范围：0.00-50.00")
         st.markdown('</div>', unsafe_allow_html=True)
 
     # 创建数据字典
