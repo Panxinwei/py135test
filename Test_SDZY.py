@@ -446,10 +446,15 @@ with tab2:
             st.dataframe(batch_data.head(), use_container_width=True)
 
             # 检查必要的列
-            required_columns = ['AFP', 'PIVKA', 'GGT', 'HBsAb',
-                                'HBeAb', 'HBcAb', 'PT'
-
-                                ]
+            required_columns = ['HbA2',
+            'RBC',
+            'HGB',
+            'MCV',
+            'MCH',
+            'MCHC',
+            'RDWCV',
+            'RDWSD',
+            'FERR']
 
             missing_columns = [col for col in required_columns if col not in batch_data.columns]
 
