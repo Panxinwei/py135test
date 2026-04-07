@@ -205,7 +205,7 @@ with tab1:
 
     with col1:
         st.markdown('<div class="input-section">', unsafe_allow_html=True)
-        S1 = st.number_input('HbA2', min_value=-10.0, max_value=10.0, value=0.00, step=0.1,
+        S1 = st.number_input('HbA2', min_value=-10.0, max_value=10.0, value=0.0, step=0.1,
                              help="HbA2，范围：-10.0-10.0")
         S2 = st.number_input('RBC', min_value=-10.00, max_value=10.00, value=0.00, step=0.01,
                              help="RBC，范围：-10.00-10.00")
