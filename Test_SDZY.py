@@ -662,6 +662,6 @@ if not st.session_state.prediction_history.empty and len(st.session_state.predic
 st.markdown("---")
 st.markdown("""
 <div style="text-align: center; color: gray; font-size: 0.9rem;">
-    <p>医疗预测分析系统（测试用）by Zoldyck | 版本 1.0 | 最后更新: 2026/03/09</p>
+    <p>基于机器学习的地中海贫血诊断预测模型（测试用）by Zoldyck | 版本 1.0 | 最后更新: 2026/04/07</p>
 </div>
 """, unsafe_allow_html=True)
